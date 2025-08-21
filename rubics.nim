@@ -1,4 +1,4 @@
-#varijable
+#variables
 var
   front: seq[string] = @[
     "\e[38;5;196m*\e[0m", "\e[38;5;196m*\e[0m", "\e[38;5;196m*\e[0m",
@@ -73,7 +73,7 @@ var
     "\e[38;5;226m*\e[0m", "\e[38;5;226m*\e[0m", "\e[38;5;226m*\e[0m"
   ]
   
-# procedure potrebne za rubiksovovu logu
+# procs for rubiks logic
 proc updateMemory() =
   pfront = front
   pback = back
@@ -84,7 +84,7 @@ proc updateMemory() =
 
 
 
-proc rotateCTop() =
+proc rotateCTop() = # ok so take a rubiks cube and rotate a side see how the top of the side rotates. this is the code for that C is clockwise CC is counter clockwise 
   for i in 1 .. 3:
     top[0] = ptop[2]
     top[1] = ptop[5]
@@ -228,8 +228,8 @@ proc rotateCCBack() =
     back[6] = pback[8]
     updateMemory()
 
-# komande za rubiksovu  # moram dodat iste komande ali za stranu gdje će bit iste komande ko ove ali će bit npr.: STL, SLD, SBR. :(
-proc TL() = # rotiranje gornjeg dijela lijevo
+# commands for the rubiks (the naming convention is T for top, M for middle, Bo for bottom, L for left, R for right, D for down, U for up wish you luck with reading ts)
+proc TL() =
   front[0 .. 2] = pright[0 .. 2]
   left[0 .. 2] = pfront[0 .. 2]
   back[0 .. 2] = pleft[0 .. 2]
@@ -275,7 +275,7 @@ proc BoR() =
   rotateCBottom()
   updateMemory()
 
-proc zaStrane(dest: var seq[string], src: var seq[string], a, b, c: int) = # proc da mogu strane bolje radit
+proc zaStrane(dest: var seq[string], src: var seq[string], a, b, c: int) = # the proc translates into "forSides" i made it so its easier to do the sides
   dest[a] = src[a]
   dest[b] = src[b]
   dest[c] = src[c]
@@ -375,17 +375,17 @@ proc BaL() =
 
 
 
-# za složenu rubiksovu
-proc slozenaStrana(seq: seq[string]): bool =
+# a proc for another proc
+proc slozenaStrana(seq: seq[string]): bool = #trasnslates to "solvedSide"
   if seq.len == 0:
     return true
-  let firstValue = seq[0]
+  let firstValue = seq[0] # it works by checking the first item in a seq and seeing if all others are the same
   for item in seq:
     if item != firstValue:
       return false
   return true
 
-proc slozenaRubiksova(): bool =
+proc slozenaRubiksova(): bool = # translate to "solvedRubiks" and it checks if the cube is solved
   if slozenaStrana(front) and slozenaStrana(back) and slozenaStrana(left) and slozenaStrana(right) and slozenaStrana(top) and slozenaStrana(bottom) == true:
     return true
   else:
@@ -400,10 +400,10 @@ proc echoRubicsStanje() =
   echo "Top", "\n", top[0], top[1], top[2], "\n", top[3], top[4], top[5], "\n", top[6], top[7], top[8], "\n"
   echo "Bottom", "\n", bottom[0], bottom[1], bottom[2], "\n", bottom[3], bottom[4], bottom[5], "\n", bottom[6], bottom[7], bottom[8], "\n"
 
-# za složit rubiksovu
+# to operate the cube
 proc rjesiRubiksovu() =
   while slozenaRubiksova() == false:
-    echo "upiši rubiksove notacije da upravljaš rubiksovu: "
+    echo "put in rubiks cube notations to control the cube: "
     var komanda = readLine(stdin)
     case komanda
     of "U":
@@ -461,10 +461,10 @@ proc rjesiRubiksovu() =
       BaR()
       echoRubicsStanje()
     else:
-      echo "fak you ponovi sve"
+      echo "fak you repeat it all"
       break
 updateMemory()
-RU()
+RU() # the first move if this wasnt here the cube would be solved. planing to add a random move set to begin a cube
 echoRubicsStanje()
 
 rjesiRubiksovu()
