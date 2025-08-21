@@ -1,11 +1,12 @@
-import random, os, threadpool
+# It was something i made so me and my friends could raid random peoples kahoot lobies as you can see, its unfinished 
+
+import random, os, threadpool # it has multithreading so the 1 minute timer can work :3
 
 var guessedInts: seq[int] = @[]
 
 proc timerExit() =
-  # Sleep for 1 second:
+  # Sleep for 1 minute:
   sleep(60000)
-  # Exit program with status 0 (success). You can use quit(code) for other codes.
   quit(0)
 spawn timerExit()
 while true:
